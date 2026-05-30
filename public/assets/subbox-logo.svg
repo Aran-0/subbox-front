@@ -1,0 +1,45 @@
+<svg width="256" height="256" viewBox="0 0 256 256" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="logoGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stopColor="#6366f1" />
+      <stop offset="100%" stopColor="#4f46e5" />
+    </linearGradient>
+  </defs>
+  
+  <!-- Main Box Shape -->
+  <g filter="drop-shadow(0 4px 12px rgba(99, 102, 241, 0.3))">
+    <!-- Top face of box -->
+    <path d="M 50 100 L 100 60 L 206 60 L 156 100 Z" fill="url(#logoGradient)" opacity="0.9"/>
+    
+    <!-- Left face of box -->
+    <path d="M 50 100 L 50 190 L 100 230 L 100 140 Z" fill="url(#logoGradient)" opacity="0.7"/>
+    
+    <!-- Right face of box -->
+    <path d="M 156 100 L 206 60 L 206 180 L 156 220 Z" fill="url(#logoGradient)"/>
+    
+    <!-- Bottom/Front face -->
+    <path d="M 50 100 L 156 100 L 156 220 L 100 230 Z" fill="url(#logoGradient)" opacity="0.95"/>
+  </g>
+  
+  <!-- Checkmark inside box - representing delivery/completion -->
+  <g transform="translate(103, 110)">
+    <circle cx="0" cy="0" r="35" fill="white" opacity="0.95"/>
+    <!-- Checkmark -->
+    <path d="M -15 5 L -5 15 L 20 -10" 
+          stroke="url(#logoGradient)" 
+          strokeWidth="4" 
+          fill="none" 
+          strokeLinecap="round" 
+          strokeLinejoin="round"/>
+  </g>
+  
+  <!-- Text - Subbox -->
+  <text x="128" y="250" 
+        fontFamily="Inter, sans-serif" 
+        fontSize="20" 
+        fontWeight="700" 
+        textAnchor="middle" 
+        fill="url(#logoGradient)">
+    SUBBOX
+  </text>
+</svg>

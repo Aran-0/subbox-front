@@ -1,0 +1,39 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Custom scrollbar width */
+.scrollbar::-webkit-scrollbar {
+  width: 0px;
+}
+
+::-webkit-scrollbar {
+  height: 5px;
+  width: 7px;
+  background-color: #f3f4f6;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: #0ea5e9;
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background-color: #0284c7;
+}
+
+/* Custom button styles */
+@layer components {
+  .btn-primary {
+    @apply bg-gradient-to-br from-primary via-sky-500 to-primary-dark text-white px-6 py-2 rounded-xl font-semibold hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1 hover:scale-105;
+  }
+
+  .btn-secondary {
+    @apply bg-gradient-to-br from-secondary via-emerald-500 to-green-600 text-white px-6 py-2 rounded-xl font-semibold hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1 hover:scale-105;
+  }
+
+  .card-shadow {
+    @apply shadow-md hover:shadow-xl transition-shadow duration-300;
+  }
+}
+
