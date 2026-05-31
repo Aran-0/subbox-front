@@ -2,6 +2,7 @@
 import PropTypes from 'prop-types';
 import { createContext, useContext, useState, useEffect } from 'react';
 import { basketAPI } from '../services/api';
+import { AuthContext } from '../Auth/firebase';
 
 const CartContext = createContext();
 
@@ -10,10 +11,14 @@ export const useCart = () => useContext(CartContext);
 export const CartProvider = ({ children }) => {
   const [cartItems, setCartItems] = useState([]);
   const [loading, setLoading] = useState(false);
+  const authContext = useContext(AuthContext);
+  const currentUser = authContext?.currentUser;
 
-  const firebaseUid = "test-user-123"; // временно
+  const firebaseUid = currentUser?.uid || "test-user-123";
 
   const loadCart = async () => {
+    if (!firebaseUid) return;
+    
     setLoading(true);
     try {
       const basket = await basketAPI.get(firebaseUid);
@@ -26,7 +31,7 @@ export const CartProvider = ({ children }) => {
       })) || [];
       setCartItems(items);
     } catch (e) {
-      console.error(e);
+      console.error("Error loading cart:", e);
       setCartItems([]);
     } finally {
       setLoading(false);
@@ -39,7 +44,7 @@ export const CartProvider = ({ children }) => {
       await loadCart();
       return true;
     } catch (error) {
-      console.error(error);
+      console.error("Error adding to cart:", error);
       return false;
     }
   };
@@ -70,13 +75,42 @@ export const CartProvider = ({ children }) => {
     );
   };
 
+  const clearCart = () => {
+    setCartItems([]);
+  };
+
+  const getCartTotal = () => {
+    return cartItems.reduce(
+      (total, item) => total + (item.price * item.quantity),
+      0
+    );
+  };
+
+  const getCartCount = () => {
+    return cartItems.reduce((count, item) => count + item.quantity, 0);
+  };
+
   useEffect(() => {
-    loadCart();
-  }, []);
+    if (currentUser) {
+      loadCart();
+    } else {
+      setCartItems([]);
+    }
+  }, [currentUser?.uid]);
 
   return (
     <CartContext.Provider
-      value={{ cartItems, addToCart, removeFromCart, handleIncrease, handleDecrease, loading }}
+      value={{
+        cartItems,
+        addToCart,
+        removeFromCart,
+        handleIncrease,
+        handleDecrease,
+        clearCart,
+        loading,
+        getCartTotal,
+        getCartCount,
+      }}
     >
       {children}
     </CartContext.Provider>
